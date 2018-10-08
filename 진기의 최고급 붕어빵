@@ -1,0 +1,65 @@
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Solution{
+    public static void main(String[] args){
+        int testcase;
+        Scanner sc = new Scanner(System.in);
+        testcase = sc.nextInt();
+        for(int t = 0 ; t<testcase; t++){
+            int n=0,m=0,k = 0;   
+            n= sc.nextInt();
+            m= sc.nextInt();
+            k= sc.nextInt();
+            int a[] =new int[n];
+        for(int i = 0; i<n; i++){
+            a[i] = 0;
+        }
+        
+        for(int j = 0 ; j<n; j++){
+			 int temp=0;
+            temp = sc.nextInt();
+               a[j]=temp;
+        }
+       Arrays.sort(a);
+            
+        int bread = 0;
+        Boolean possible = true;
+        if(a[0]<m){
+            System.out.print("#"+(t+1)+" ");
+            System.out.println("Impossible");
+            continue;
+        }
+        for(int i = 0, j= 0; j<n; i++){
+             if(i%m==0 && i!=0){
+                 bread += k;
+                }
+              while(a[j]<=i){
+                  bread--;
+                   j++;
+                  
+                  if(bread<0){
+                    possible = false;
+                    break;
+                }
+                   if(j>=n){
+                    possible =true;
+                    break;
+                }   
+              }
+             if(bread<0){
+                    possible = false;
+                    break;
+                }
+        }
+        if(possible == false){
+            System.out.print("#"+(t+1)+" ");
+            System.out.println("Impossible");
+        }
+        else{
+            System.out.print("#"+(t+1)+" ");
+            System.out.println("Possible");
+        }
+        }
+    }
+}
