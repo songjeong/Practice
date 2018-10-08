@@ -1,0 +1,72 @@
+import java.util.*;
+  
+public class Solution{
+    static int result, max = 0;
+    static int map[][];
+    static int n,m =0;
+    public static void main(String[] args){
+        int testcase;
+       Scanner sc = new Scanner(System.in);
+        testcase = sc.nextInt();
+         
+        for(int t = 0 ; t<testcase; t++){
+            n= sc.nextInt(); // mapsize
+            m= sc.nextInt();// cost
+            map = new int [n] [n];
+            for(int i = 0; i<n; i++){
+                for(int j =0; j<n; j++){
+                    map[i][j] = sc.nextInt();
+                }
+            }
+            result = 0;
+            max = 0;
+            result = security();
+            System.out.println("#"+(t+1)+" "+result);
+        }  
+    }
+    static int security(){
+        int result = 0;
+        int max = 0;
+        for( int i = 0; i<=n; i++){ // k의 범위는 어차피 맵 크기만큼임.
+            int min = ((i*i)+((i+1)*(i+1))) / m;
+            if( ((i*i)+((i+1)*(i+1))) % m != 0)
+                min=min+1;
+           // min => 최소 집 개수
+             
+            for( int x= 0 ; x<n; x++){
+                for(int y=0; y<n; y++){
+                        result = 0;        
+                         
+                        int s = y;
+                        int e = y;
+                        for( int tempx = x-i; tempx<=x+i; tempx++){
+                            for(int tempy= s; tempy <=e; tempy++){
+                                if(tempx <0 || tempy <0 || tempx > n-1|| tempy >n-1){
+                                    result =result;
+                                }
+                                else if(map[tempx][tempy]==1){
+                                   result= result+1;
+                                }
+                                if(result >=min){
+                                    if(max <= result){
+                                        max=result;
+                                    }
+                                }
+                            }
+                                if (tempx < x)
+                                {
+                                    s = s-1;
+                                    e = e+1;
+                                }
+                                 else{
+                                    s=s+1;
+                                    e=e-1;
+                                }
+                        }
+///////////////////////////////                         
+                } 
+            }
+        }
+        return max;
+    }
+}
