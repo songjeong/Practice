@@ -1,0 +1,42 @@
+import java.util.*;
+import java.io.*;
+
+class Solution
+{
+    int max = 0;
+	public static void main(String args[]) throws Exception
+	{
+		Scanner sc = new Scanner(System.in);
+		int T;
+		T=sc.nextInt(); // Testcase 개수
+        int road[] = new int[201];
+        int max = 0 ;
+		for(int test_case = 1; test_case <= T; test_case++)
+		{
+            max = 0;
+            int N = sc.nextInt();
+            for(int r =0; r<201; r++)
+                road[r] = 0;
+            for(int i =0; i<N; i++){
+                int temp = sc.nextInt();
+                int temp2 = sc.nextInt();
+                int froad = (temp+1)/2;
+                int sroad = (temp2+1)/2;
+                
+                if(froad<=sroad){
+                	for(int t = froad; t <= sroad; t++){
+                    	road[t]++;
+                	}	
+                }
+                else{
+                    for(int t= sroad; t<=froad; t++){
+                        road[t]++;
+                    }
+                }
+            }
+            Arrays.sort(road);
+            max = road[200];
+            System.out.println("#"+test_case+" "+max);
+		}
+	}
+}
