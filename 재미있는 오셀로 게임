@@ -1,0 +1,68 @@
+import java.util.*;
+
+class Solution
+{
+    static int map[][];
+    static int N;
+    static int M;
+	public static void main(String args[]) throws Exception
+	{
+        Scanner sc = new Scanner(System.in);
+		int T;
+		T=sc.nextInt();
+        for(int test_case = 1; test_case <= T; test_case++)
+		{
+            N = sc.nextInt(); //크기
+			M = sc.nextInt();//횟수
+			map = new int[N][N];
+            map[N/2-1][N/2-1] = 2;
+            map[N/2-1][N/2] = 1;
+            map[N/2][N/2-1]= 1;
+            map[N/2][N/2]= 2;
+            
+            for(int i = 0 ; i<M; i++){
+                int y = sc.nextInt()-1;
+				int x = sc.nextInt()-1;
+                int stn = sc.nextInt();
+                START(x,y,stn);
+            }
+            
+            int cntBlack = 0, cntWhite = 0;
+            for(int i=0; i<N; i++) {
+                for(int j=0; j<N; j++) {
+                    if(map[i][j] == 2)
+                        cntWhite++;
+                    else if(map[i][j] == 1)
+                        cntBlack++;
+                }
+            }
+            System.out.println("#"+test_case+" "+cntBlack+" "+cntWhite);
+		}
+	}
+    public static void START(int x, int y, int stn) {
+        for(int i=-1; i<=1; i++) {
+            for(int j=-1; j<=1; j++) {
+                int t = -1;
+                for(int k=1; k<N; k++) {
+                    int sx = x+i*k;
+                    int sy = y+j*k;
+                    if(sx>=0 && sx<N && sy>=0 && sy<N) {
+                        if(map[sx][sy] == 0) {
+                            t = -1;
+                            break;
+                        } else if(map[sx][sy] == stn) {
+                            t = k;
+                            break;
+                        }
+                    }
+                }
+                 
+                while(t>0) {
+                    map[x+i*t][y+j*t] = stn;
+                    t--;
+                }
+            }
+        }
+        map[x][y] = stn;
+    }
+}
