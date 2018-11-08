@@ -1,0 +1,37 @@
+import java.io.*;
+import java.util.*;
+  
+public class Solution{
+    static int arr[];
+    static int dp[];
+    static int max;
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int T=sc.nextInt();
+        max = 0;
+         
+        for(int test_case=1;test_case<=T;test_case++) {
+            max = 0;
+            int N=sc.nextInt();
+           arr=new int[N];
+           dp= new int[N];
+            dp[0] = 1;
+            for(int i = 0 ; i <N; i++){
+                arr[i] = sc.nextInt();
+            }
+             
+            for( int x = 1; x<N; x++){
+                dp[x] = 1;
+                for(int y= 0; y<x; y++){
+                    if(arr[x]>arr[y] && dp[y]>=dp[x]){
+                        dp[x]=dp[y]+1;
+                    }
+                }
+                if (max < dp[x]) { 
+                    max = dp[x]; 
+                }
+            }
+            System.out.println("#"+test_case+" "+max);
+        }
+    }
+}
