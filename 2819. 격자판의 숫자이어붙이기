@@ -8,43 +8,45 @@ public class Solution{
    public static void dfs(int x, int y, String num){
        if(num.length()==7){
           map.put(num,1);
+           //개수만 정할거라 굳이 숫자 추가할 필요 없음.
           return;
        }
-       if(y<3){
-       	dfs(x,y+1,num+Integer.toString(matrix[x][y+1]));
-       }
-        if(y>0){
-       	dfs(x,y-1,num+Integer.toString(matrix[x][y-1]));
-       }
+       // 돌아가면서 찍어보기 이어 붙여야 해서 String으로 변환한다.
        if(x<3){
        	dfs(x+1,y,num+Integer.toString(matrix[x+1][y]));
        }
         if(x>0){
        	dfs(x-1,y,num+Integer.toString(matrix[x-1][y]));
        }
+        if(y<3){
+       	dfs(x,y+1,num+Integer.toString(matrix[x][y+1]));
+       }
+       if(y>0){
+       	dfs(x,y-1,num+Integer.toString(matrix[x][y-1]));
+       }
 
    }
    public static void main(String[] args){
        Scanner sc = new Scanner(System.in);
        test_case = sc.nextInt();
+       map = new HashMap<String,Integer>(); // 중복 키값 방지를 위한 해쉬맵.
        for(int t= 1; t<test_case+1; t++){
        matrix = new int[4][4];
-       map = new HashMap<String,Integer>();
-       for(int i =0; i<4; i++){
+       for(int i =0; i<4; i++){  // 입력값 넣기
            for(int j = 0; j<4; j++)
            {
                int temp=sc.nextInt();
 			   matrix[i][j]=temp;
            }
        }
-       for(int i=0;i<4;i++){
+       for(int i=0;i<4;i++){ // 각 좌표마다 dfs 
 			for(int j=0;j<4;j++)
             {
                 String num = Integer.toString(matrix[i][j]);
 				dfs(i,j,num);
             }
        }
-       System.out.println("#"+t+" "+map.size());
+       System.out.println("#"+t+" "+map.size()); // 해쉬 키값 개수를 위해 size 찍고 해쉬 초기화
        map.clear();
    }
    }
