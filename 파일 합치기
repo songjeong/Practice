@@ -1,0 +1,71 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args){
+
+        int T; // testcase
+        int K; // count
+        int[] C; // 입력값 저장
+        int[] S; // 처음값부터 차례로 저장하는 배열
+        int[][] dp; // 최소값 저장.
+
+        Scanner sc = new Scanner(System.in);
+
+        T = sc.nextInt();
+
+        for (int t = 0; t < T; t++) {
+
+            K = sc.nextInt();
+            C = new int[K + 1];
+            S = new int[K + 1];
+            dp = new int[K + 1][K + 1];
+
+            S[0] = 0;
+
+            for (int i = 1; i < K + 1; i++) {
+
+                C[i] = sc.nextInt();
+                S[i] = S[i - 1] + C[i];
+
+                for (int j = 1; j < K + 1; j++) {
+
+                    dp[i][j] = Integer.MAX_VALUE; // 미리 최대값으로 모두 초기화
+                }
+            }
+
+            System.out.println(merger(dp, C, S, 1, K));
+        }
+    }
+
+    static int merger(int[][] dp, int[] C, int[] S, int start, int end) {
+
+        // 자기 자신인 경우 합치는 비용은 0
+        if (start >= end) {
+
+            return 0;
+        }
+
+        // 이웃한 경우 => 이웃한거 끼리 합.
+        if (end == (start + 1)) {
+
+            return C[start] + C[end];
+        }
+
+        if (dp[start][end] < Integer.MAX_VALUE) { // dp값이 최대값보다 크면 바꿈.
+
+            return dp[start][end];
+        }
+
+        for (int i = start; i < end; i++) { 
+            // dp[i][j] = dp[i][k]+ dp[k+1][j](이 안의 경우 많음)+ 배열 i~j까지의 합 (S[j]-s[i])
+
+            int temp = merger(dp, C, S, start, i) + merger(dp, C, S, i + 1, end) 
+                + S[end] - S[start - 1];
+
+            dp[start][end] = Math.min(dp[start][end], temp);
+        }
+
+        return dp[start][end];
+    }
+}
