@@ -1,0 +1,35 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args){
+        int T;
+        int[] C; // key값 저장
+        int[] S; // Val값 저장
+        int[] dp; // 최대값 저장.
+
+        Scanner sc = new Scanner(System.in);
+
+        T = sc.nextInt();
+        C = new int[T + 1];
+        S = new int[T + 1];
+        dp = new int[T + 1];
+        
+        for (int t = 1; t <=T; t++) {
+            C[t] = sc.nextInt();
+            S[t] = sc.nextInt();
+        }
+        
+        for (int i = 1; i <= T; i++) {
+            for(int j= 1; j<=i; j++){
+                if(j+C[j]-1 <= i){ //내가 책임질 수 있는 일자인지 확인이 필요
+                   if (dp[i] < dp[j-1] + S[j]) {
+                    dp[i] = dp[j-1] + S[j];
+                }
+                }
+            }
+        }
+
+            System.out.println(dp[T]);
+     }
+ }
