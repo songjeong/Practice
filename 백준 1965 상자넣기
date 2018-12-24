@@ -1,0 +1,38 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args){
+        int T;
+        int[] b; // box값 저장
+        int[] dp; // 현재까지의 개수 저장.
+
+        Scanner sc = new Scanner(System.in);
+
+        T = sc.nextInt();
+        b = new int[T + 1];
+        dp = new int[T + 1];
+        
+        for (int t = 1; t <=T; t++) {
+            b[t] = sc.nextInt();
+        }
+        
+        int max =0;
+        // 가장 작은 값 max 
+        
+        for(int i = 1 ; i <= T ; i++){
+            dp[i]=1;
+            for(int j = 1 ; j < i; j++){
+                if(b[i]>b[j]){
+                    if(dp[i] < dp[j]+1){
+                        dp[i]=dp[j]+1;
+                    }
+                }
+            }
+            if(dp[i]> max){
+                max = dp[i];
+            }
+        }
+        System.out.println(max);
+     }
+ }
